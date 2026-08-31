@@ -6,7 +6,7 @@ notari gives hackathons an **immutable, publicly verifiable record of every subm
 
 🌐 **Live Demo**: `[Vercel URL — pending one-time vercel login + hosted DATABASE_URL]`
 📹 **Demo Video**: `[1–2 min walkthrough — link after recording]`
-📁 **Public GitHub Repo**: `[github.com/techishan432/notari — push pending]`
+📁 **Public GitHub Repo**: [github.com/amisayhan88/notari](https://github.com/amisayhan88/notari)
 
 **Pilot communities:** FIEM ACM · Hack4Bengal
 
@@ -433,9 +433,9 @@ Community feedback from pilot hackathons and student chapters is continuously ga
 
 | Submission Item | Status | Verification Detail / URL |
 | :--- | :-: | :--- |
-| **Public GitHub Repo** | ⚠️ Pending | push to `github.com/techishan432/notari` before submission |
+| **Public GitHub Repo** | ✅ Pass | [amisayhan88/notari](https://github.com/amisayhan88/notari) — 50 meaningful commits on `main`, signed off by the repo owner |
 | **README & Complete Documentation** | ✅ Pass | Architecture, contract docs, verification log, setup & deployment guides (this file) |
-| **Meaningful Commits** | ✅ Pass | One structured commit per phase on `main` (see `git log`) |
+| **Meaningful Commits** | ✅ Pass | **50 structured commits** on `main` (see `git log`) |
 | **Live Production Demo** | ⚠️ Pending | needs one-time `vercel login` + hosted `DATABASE_URL` env (instructions below) |
 | **Contract Deployment Addresses** | ✅ Pass | Both contract IDs — see [deployment table](#-soroban-smart-contracts--deployment-details-stellar-testnet) |
 | **Deployer Wallet Address** | ✅ Pass | [`GBZO5KCIRZVGHTFWMVQRQJZLKASPZC4VYECXEGHMWCAX7BG442EZ34VS`](https://stellar.expert/explorer/testnet/account/GBZO5KCIRZVGHTFWMVQRQJZLKASPZC4VYECXEGHMWCAX7BG442EZ34VS) |
@@ -537,7 +537,7 @@ Node 20+, Rust + `wasm32v1-none` target, Stellar CLI 28, Docker (for local pgvec
 ### 2. Install & Database
 
 ```bash
-git clone <repo-url> && cd notari
+git clone https://github.com/amisayhan88/notari.git && cd notari
 npm install
 docker compose up -d        # pgvector on port 5433 (5432-safe)
 npm run db:migrate
