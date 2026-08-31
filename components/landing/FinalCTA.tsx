@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import Logo from "@/components/Logo";
 
@@ -24,9 +25,9 @@ export default function FinalCTA() {
           afterparty.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <a href="/submit" className="btn btn-primary">Submit a project</a>
-          <a href="/register" className="btn btn-ghost">Register as organizer</a>
-          <a href="/verify" className="btn btn-ghost">Verify a submission</a>
+          <Link href="/submit" className="btn btn-primary">Submit a project</Link>
+          <Link href="/register" className="btn btn-ghost">Register as organizer</Link>
+          <Link href="/verify" className="btn btn-ghost">Verify a submission</Link>
         </div>
       </div>
     </div>

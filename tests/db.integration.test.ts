@@ -5,6 +5,7 @@
  *   DATABASE_URL=postgresql://notari:notari@localhost:5432/notari npm test
  */
 import { describe, expect, it } from "vitest";
+import { Pool } from "pg";
 import { checkSimilarity, embedSubmission } from "@/lib/ai-similarity";
 import { PgStore } from "@/lib/ai-similarity/store";
 import { migrate } from "@/lib/db";
@@ -25,6 +26,11 @@ function sub(overrides: Partial<SubmissionInput> & Pick<SubmissionInput, "hash" 
 describeWithDb("PgStore + pgvector round trip", () => {
   it("stores embeddings and finds cross-event neighbors", async () => {
     await migrate();
+    // Hermetic: clear rows from previous runs of this test so stale
+    // embeddings can't win the nearest-neighbor search.
+    await new Pool({ connectionString: process.env.DATABASE_URL }).query(
+      `DELETE FROM submissions WHERE submission_hash LIKE 'pg-%'`,
+    );
     const store = new PgStore();
     const suffix = Date.now();
 

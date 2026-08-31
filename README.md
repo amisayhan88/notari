@@ -1,5 +1,7 @@
 # notari — SubmitChain
 
+![CI](https://github.com/amisayhan88/notari/actions/workflows/ci.yml/badge.svg)
+
 > **"What was submitted, by whom, and when — proven on-chain. Verifiable by anyone."**
 
 notari gives hackathons an **immutable, publicly verifiable record of every submission** on Stellar's **Soroban** smart-contract platform. The moment a team locks in their project, its canonical hash is timestamped on-chain; exact duplicates are rejected by the contract itself, and an advisory AI layer flags likely cross-event resubmissions for organizer review **before judging happens**. Anyone can open a submission's verify page and read its full provenance straight from the contract.
@@ -444,7 +446,7 @@ Community feedback from pilot hackathons and student chapters is continuously ga
 | **Basic User Feedback Summary** | ✅ Pass | [Feedback Form](https://forms.gle/nQZzh1WRdAEv4w4P7) & [Responses Spreadsheet](https://docs.google.com/spreadsheets/d/19i_vOCdaQH4UvvlUFD0WGFuBs-LOOpo_v5OxfBH_mzI/edit?gid=656352860#gid=656352860) |
 | **Demo Video Link (1–2 mins)** | ⚠️ Pending | record after Vercel deploy |
 | **Mobile Responsive UI Showcase** | ✅ Pass | Responsive layouts + WebGL fallbacks + `prefers-reduced-motion` (see [UI Showcase](#-platform-ui-showcase)) |
-| **CI/CD Pipeline Setup** | ⚠️ Partial | Local verification gates: `cargo test --workspace`, `npm test`, `npm run build`; GitHub Actions workflow not yet configured |
+| **CI/CD Pipeline Setup** | ✅ Pass | GitHub Actions (`.github/workflows/ci.yml`) on every push/PR: eslint, 8 vitest tests against a real pgvector service, production build, 16 cargo tests, WASM build + artifact upload |
 | **Contract Unit Tests** | ✅ Pass | **16/16** passing (`cargo test --workspace`) + **8/8** similarity pipeline tests (`vitest`) |
 
 - [x] **Soroban Smart Contract Implementation**: two custom Rust contracts enforcing organizer RBAC, on-chain event registration, and trustless exact-duplicate rejection.
@@ -568,12 +570,17 @@ npm run dev                 # http://localhost:3000
 npm run db:seed             # 2 events, 7 submissions, one deliberate near-duplicate (flags at ~98%)
 ```
 
-### 5. Tests
+### 5. Tests & CI
 
 ```bash
-cargo test --workspace      # contracts — 11 tests
+cargo test --workspace      # contracts — 16 tests
 npm test                    # similarity pipeline — 8 tests (incl. pgvector round trip)
+npm run lint                # eslint-config-next
 ```
+
+Every push and PR also runs the full gate in GitHub Actions (`.github/workflows/ci.yml`):
+lint → vitest (against a real `pgvector/pgvector:pg17` service container) →
+production build → cargo tests → WASM build with artifact upload.
 
 ---
 

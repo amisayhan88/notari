@@ -54,6 +54,7 @@ export default function SubmitPage() {
   // Prefill the team wallet from the connected identity.
   useEffect(() => {
     if (authWallet) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- reactive prefill, not init state
       setForm((f) => (f.teamWallet ? f : { ...f, teamWallet: authWallet }));
     }
   }, [authWallet]);

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
 import HeroScene from "@/components/HeroScene";
 
@@ -52,12 +53,12 @@ export default function Hero({
             whom, and when. Anyone can verify it. Duplicates can&apos;t hide.
           </p>
           <div className="pointer-events-auto flex flex-wrap gap-3">
-            <a href="/submit" className="btn btn-primary">
+            <Link href="/submit" className="btn btn-primary">
               Submit a project
-            </a>
-            <a href="/verify" className="btn btn-ghost">
+            </Link>
+            <Link href="/verify" className="btn btn-ghost">
               Verify a submission
-            </a>
+            </Link>
           </div>
           <p className="pointer-events-auto mono text-xs text-muted">
             {timestampedCount} on-chain records · {eventCount} events · 0 XLM

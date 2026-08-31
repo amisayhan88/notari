@@ -43,6 +43,8 @@ export default function RegisterPage() {
   const suggestedId = useMemo(() => slugify(name), [name]);
 
   useEffect(() => {
+    // Prefill the organizer field when a wallet connects (reactive, not init).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (wallet) setOrganizer(wallet);
   }, [wallet]);
 

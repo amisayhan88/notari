@@ -35,14 +35,14 @@ function apply(theme: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "dark";
+    return localStorage.getItem("notari-theme") === "light" ? "light" : "dark";
+  });
 
   useEffect(() => {
-    const stored = localStorage.getItem("notari-theme");
-    const initial: Theme = stored === "light" ? "light" : "dark";
-    setTheme(initial);
-    apply(initial);
-  }, []);
+    apply(theme);
+  }, [theme]);
 
   const toggle = useCallback(() => {
     setTheme((t) => {

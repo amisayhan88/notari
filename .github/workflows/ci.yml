@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  app:
+    name: App — lint · 8 vitest tests · production build
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: notari
+          POSTGRES_PASSWORD: notari
+          POSTGRES_DB: notari
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U notari"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://notari:notari@localhost:5432/notari
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (eslint-config-next)
+        run: npm run lint
+
+      - name: Tests — similarity pipeline + pgvector round trip (vitest)
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+
+  contracts:
+    name: Contracts — 16 cargo tests · WASM build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32v1-none
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+
+      - name: Contract unit tests (submission-registry + event-registry)
+        run: cargo test --workspace
+
+      - name: Build contract WASM
+        run: cargo build --target wasm32v1-none --release --workspace
+
+      - name: Upload WASM artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: soroban-wasm
+          path: target/wasm32v1-none/release/*.wasm
+          if-no-files-found: error

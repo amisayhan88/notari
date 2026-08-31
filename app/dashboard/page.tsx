@@ -62,8 +62,12 @@ function statusBadge(status: string) {
 
 export default function DashboardPage() {
   const { wallet: authWallet, profile, eventsOrganized, openConnect } = useAuth();
-  const [address, setAddress] = useState("");
-  const [savedAddress, setSavedAddress] = useState("");
+  const [address, setAddress] = useState(
+    () => (typeof window !== "undefined" && localStorage.getItem("notari-organizer")) || "",
+  );
+  const [savedAddress, setSavedAddress] = useState(
+    () => (typeof window !== "undefined" && localStorage.getItem("notari-organizer")) || "",
+  );
   const [events, setEvents] = useState<EventInfo[]>([]);
   const [eventId, setEventId] = useState("");
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -77,19 +81,14 @@ export default function DashboardPage() {
   const [adminAddress, setAdminAddress] = useState<string | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("notari-organizer");
-    if (stored) {
-      setAddress(stored);
-      setSavedAddress(stored);
-    }
-  }, []);
-
-  // Adopt the globally connected wallet when nothing is set locally.
-  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    // Adopts the globally connected wallet when nothing is set locally —
+    // reactive adoption of shared auth state, not derivable at init time.
     if (authWallet && !localStorage.getItem("notari-organizer")) {
       setAddress(authWallet);
       setSavedAddress(authWallet);
     }
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [authWallet]);
 
   const loadEvents = useCallback(async () => {
@@ -100,6 +99,7 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- async fetch, setState happens post-await
     loadEvents().catch(() => setError("Could not load events"));
   }, [loadEvents]);
 
@@ -126,6 +126,7 @@ export default function DashboardPage() {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- async fetch, setState happens post-await
     if (eventId && savedAddress) loadQueue(eventId, savedAddress);
   }, [eventId, savedAddress, loadQueue]);
 

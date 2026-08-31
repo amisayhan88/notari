@@ -52,7 +52,9 @@ export function useAuth(): AuthContextValue {
 type ModalStep = "method" | "secret" | "profile";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [wallet, setWallet] = useState<string | null>(null);
+  const [wallet, setWallet] = useState<string | null>(() =>
+    typeof window === "undefined" ? null : localStorage.getItem("notari-wallet"),
+  );
   const [profile, setProfile] = useState<ProfileView | null>(null);
   const [eventsOrganized, setEventsOrganized] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -78,13 +80,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setProfile(d.profile ?? null);
       setEventsOrganized(d.events_organized ?? []);
       if (d.profile) {
-        setForm((f) => ({
+        setForm({
           name: d.profile.name ?? "",
           organization: d.profile.organization ?? "",
           location: d.profile.location ?? "",
           bio: d.profile.bio ?? "",
           role: d.profile.role === "organizer" ? "organizer" : "team",
-        }));
+        });
       }
     } catch {
       // profile is optional UX data; never block the wallet flow
@@ -92,12 +94,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const stored = localStorage.getItem("notari-wallet");
-    if (stored) {
-      setWallet(stored);
-      fetchProfile(stored);
-    }
-  }, [fetchProfile]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- async fetch, setState happens post-await
+    if (wallet) fetchProfile(wallet);
+  }, [wallet, fetchProfile]);
 
   const adoptWallet = useCallback(
     (w: string, role: "team" | "organizer") => {
