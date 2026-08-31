@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+:root {
+  --background: #060a12;
+  --foreground: #e8eef7;
+  --panel: #0b1220;
+  --line: #1c2942;
+  --accent: #38e1b0; /* ledger green — trust */
+  --accent-2: #5ba8ff; /* chain blue */
+  --warn: #ffb454; /* advisory flag */
+  --danger: #ff5d6c; /* flagged / resubmission red */
+  --muted: #8fa1bd;
+}
+
+[data-theme="light"] {
+  --background: #f4f7fb;
+  --foreground: #0d1424;
+  --panel: #ffffff;
+  --line: #d8e0ee;
+  --accent: #0b9e77; /* darker ledger green for contrast on white */
+  --accent-2: #2f6fd6;
+  --warn: #b25e00;
+  --danger: #d93a4d;
+  --muted: #5b6b84;
+}
+
+/* Cinematic stages stay dark in BOTH themes — the 3D scenes are lit for
+   dark backgrounds, and scoped variable overrides keep every child
+   (cards, text, borders) legible on them. */
+.stage-dark {
+  --background: #060a12;
+  --foreground: #e8eef7;
+  --panel: #0b1220;
+  --line: #1c2942;
+  --muted: #8fa1bd;
+  --accent: #38e1b0;
+  --accent-2: #5ba8ff;
+  --warn: #ffb454;
+  --danger: #ff5d6c;
+  background-color: #060a12;
+  color: #e8eef7;
+}
+
+/* Hero backdrop adapts to the active theme — soft brand glows over the
+   page background, professional in both modes. */
+.hero-bg {
+  background:
+    radial-gradient(ellipse 55% 45% at 72% 38%, rgba(91, 168, 255, 0.16), transparent 62%),
+    radial-gradient(ellipse 45% 40% at 26% 72%, rgba(56, 225, 176, 0.11), transparent 60%),
+    var(--background);
+}
+[data-theme="light"] .hero-bg {
+  background:
+    radial-gradient(ellipse 55% 45% at 72% 38%, rgba(47, 111, 214, 0.12), transparent 62%),
+    radial-gradient(ellipse 45% 40% at 26% 72%, rgba(11, 158, 119, 0.1), transparent 60%),
+    var(--background);
+}
+
+/* Text separation shadows only where the backdrop is dark. */
+[data-theme="dark"] .hero-copy .hero-title {
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.6);
+}
+[data-theme="dark"] .hero-copy .hero-sub {
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.55);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-panel: var(--panel);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+/* Subtle grid backdrop for hero-ish sections */
+.grid-backdrop {
+  background-image:
+    linear-gradient(to right, rgba(91, 168, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(91, 168, 255, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+.input {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.9rem;
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 120ms ease;
+}
+.input:focus {
+  border-color: var(--accent-2);
+}
+.input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 120ms ease, transform 120ms ease;
+  cursor: pointer;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #04120d;
+}
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--foreground);
+}
+.btn-danger {
+  background: rgba(255, 93, 108, 0.12);
+  border: 1px solid rgba(255, 93, 108, 0.4);
+  color: var(--danger);
+}
