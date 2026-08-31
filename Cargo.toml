@@ -1,0 +1,13 @@
+[workspace]
+resolver = "2"
+members = [
+    "contracts/submission-registry",
+    "contracts/event-registry",
+]
+
+[profile.release]
+overflow-checks = true
+
+[profile.release-with-logs]
+inherits = "release"
+debug-assertions = true
