@@ -1,0 +1,17 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    ports:
+      # 5433: a local Postgres already owns 5432 on this machine.
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: notari
+      POSTGRES_PASSWORD: notari
+      POSTGRES_DB: notari
+    volumes:
+      - notari_pgdata:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+
+volumes:
+  notari_pgdata:
