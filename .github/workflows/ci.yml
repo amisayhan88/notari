@@ -28,7 +28,7 @@ jobs:
     env:
       DATABASE_URL: postgresql://notari:notari@localhost:5432/notari
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v4
         with:
@@ -51,7 +51,7 @@ jobs:
     name: Contracts — 16 cargo tests · WASM build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -68,7 +68,7 @@ jobs:
         run: cargo build --target wasm32v1-none --release --workspace
 
       - name: Upload WASM artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: soroban-wasm
           path: target/wasm32v1-none/release/*.wasm
