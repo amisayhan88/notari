@@ -47,7 +47,7 @@ flowchart LR
     UI -->|wallet connect| FW
     API --> AI
     API <--> DB
-    API -->|sponsored record() + reads| RPC
+    API -->|"sponsored record + reads"| RPC
     RPC --> SR
     SR -->|is_authorized_organizer| ER
     API -->|create + fund team accounts| H
