@@ -13,10 +13,43 @@ import "dotenv/config";
 import { Keypair } from "@stellar/stellar-sdk";
 import { canonicalHash } from "../lib/stellar/canonicalize";
 import { checkSimilarity } from "../lib/ai-similarity";
+import { upsertProfile } from "../lib/profiles";
 import { getSubmissionByHash, insertSubmission, updateSubmission } from "../lib/submissions";
 
 const EVENT_A = "hack4bengal_2026";
 const EVENT_B = "fiem_acm_hackathon";
+
+/**
+ * Demo organizer profiles — the wallets that are on-chain organizers of the
+ * demo events (see the wallet identities table in the README). Display/UX
+ * data only; their authority comes from the event-registry contract.
+ */
+const DEMO_ORGANIZERS = [
+  {
+    wallet: "GBZO5KCIRZVGHTFWMVQRQJZLKASPZC4VYECXEGHMWCAX7BG442EZ34VS",
+    role: "organizer",
+    name: "Aritra Das",
+    organization: "notari pilots",
+    location: "Kolkata, IN",
+    bio: "Runs the testnet pilots",
+  },
+  {
+    wallet: "GDEQ54A5IGD4L3JMGCEAKBMJE2R5YAD2SQ5D5TLRJYAPL45KNKAP4HFD",
+    role: "organizer",
+    name: "FIEM ACM",
+    organization: "FIEM ACM Student Chapter",
+    location: "Kolkata, IN",
+    bio: "Pilot community — organizes FIEM ACM Hackathon and co-organizes Hack4Bengal 2026.",
+  },
+  {
+    wallet: "GAOYJQS222XE3S36YDDOUIDVMDKOWJEJFBCFTAKKBDBT3OP3NJSAVAX7",
+    role: "organizer",
+    name: "HackSpire",
+    organization: "HackSpire Community",
+    location: "Kolkata, IN",
+    bio: "Pilot community — co-organizes Hack4Bengal 2026 and FIEM ACM Hackathon.",
+  },
+] as const;
 
 interface DemoSubmission {
   eventId: string;
@@ -102,6 +135,12 @@ const demo: DemoSubmission[] = [
 
 async function main() {
   console.log("Seeding demo data…\n");
+
+  for (const o of DEMO_ORGANIZERS) {
+    await upsertProfile(o);
+    console.log(`+ organizer profile: ${o.name} (${o.wallet.slice(0, 8)}…)`);
+  }
+
   const wallets = new Map<string, string>();
 
   for (const d of demo) {
