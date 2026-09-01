@@ -6,7 +6,7 @@
 
 notari gives hackathons an **immutable, publicly verifiable record of every submission** on Stellar's **Soroban** smart-contract platform. The moment a team locks in their project, its canonical hash is timestamped on-chain; exact duplicates are rejected by the contract itself, and an advisory AI layer flags likely cross-event resubmissions for organizer review **before judging happens**. Anyone can open a submission's verify page and read its full provenance straight from the contract.
 
-🌐 **Live Demo**: [notari-amisayhan88.vercel.app](https://notari-amisayhan88.vercel.app)
+🌐 **Live Demo**: [tessera-beta-five.vercel.app](https://tessera-beta-five.vercel.app/)
 📹 **Demo Video**: [Watch on YouTube](https://youtu.be/ZX6fF-mZ9bM)
 📁 **Public GitHub Repo**: [github.com/amisayhan88/notari](https://github.com/amisayhan88/notari)
 
