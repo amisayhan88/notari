@@ -6,8 +6,8 @@
 
 notari gives hackathons an **immutable, publicly verifiable record of every submission** on Stellar's **Soroban** smart-contract platform. The moment a team locks in their project, its canonical hash is timestamped on-chain; exact duplicates are rejected by the contract itself, and an advisory AI layer flags likely cross-event resubmissions for organizer review **before judging happens**. Anyone can open a submission's verify page and read its full provenance straight from the contract.
 
-🌐 **Live Demo**: `[Vercel URL — pending one-time vercel login + hosted DATABASE_URL]`
-📹 **Demo Video**: `[1–2 min walkthrough — link after recording]`
+🌐 **Live Demo**: [notari-amisayhan88.vercel.app](https://notari-amisayhan88.vercel.app)
+📹 **Demo Video**: [Watch on YouTube](https://youtu.be/ZX6fF-mZ9bM)
 📁 **Public GitHub Repo**: [github.com/amisayhan88/notari](https://github.com/amisayhan88/notari)
 
 **Pilot communities:** FIEM ACM · Hack4Bengal
@@ -438,13 +438,13 @@ Community feedback from pilot hackathons and student chapters is continuously ga
 | **Public GitHub Repo** | ✅ Pass | [amisayhan88/notari](https://github.com/amisayhan88/notari) — 50 meaningful commits on `main`, signed off by the repo owner |
 | **README & Complete Documentation** | ✅ Pass | Architecture, contract docs, verification log, setup & deployment guides (this file) |
 | **Meaningful Commits** | ✅ Pass | **50 structured commits** on `main` (see `git log`) |
-| **Live Production Demo** | ⚠️ Pending | needs one-time `vercel login` + hosted `DATABASE_URL` env (instructions below) |
+| **Live Production Demo** | ✅ Pass | [notari-amisayhan88.vercel.app](https://notari-amisayhan88.vercel.app) |
 | **Contract Deployment Addresses** | ✅ Pass | Both contract IDs — see [deployment table](#-soroban-smart-contracts--deployment-details-stellar-testnet) |
 | **Deployer Wallet Address** | ✅ Pass | [`GBZO5KCIRZVGHTFWMVQRQJZLKASPZC4VYECXEGHMWCAX7BG442EZ34VS`](https://stellar.expert/explorer/testnet/account/GBZO5KCIRZVGHTFWMVQRQJZLKASPZC4VYECXEGHMWCAX7BG442EZ34VS) |
 | **Proof of 10+ Wallet Interactions** | ✅ Pass | **24 successful testnet transactions** across v1+v2 — funding, WASM uploads, deployments, setup invokes, sponsored records, event registrations (see [verification log](#-on-chain-verification-log--testnet-2026-08-31)) + 2 live duplicate rejections |
 | **Analytics & Monitoring Setup** | ✅ Pass | Live registry feed + stats on landing, on-chain reads for `/verify`, simulate→confirm loop with surfaced contract errors |
 | **Basic User Feedback Summary** | ✅ Pass | [Feedback Form](https://forms.gle/nQZzh1WRdAEv4w4P7) & [Responses Spreadsheet](https://docs.google.com/spreadsheets/d/19i_vOCdaQH4UvvlUFD0WGFuBs-LOOpo_v5OxfBH_mzI/edit?gid=656352860#gid=656352860) |
-| **Demo Video Link (1–2 mins)** | ⚠️ Pending | record after Vercel deploy |
+| **Demo Video Link (1–2 mins)** | ✅ Pass | [youtu.be/ZX6fF-mZ9bM](https://youtu.be/ZX6fF-mZ9bM) |
 | **Mobile Responsive UI Showcase** | ✅ Pass | Responsive layouts + WebGL fallbacks + `prefers-reduced-motion` (see [UI Showcase](#-platform-ui-showcase)) |
 | **CI/CD Pipeline Setup** | ✅ Pass | GitHub Actions (`.github/workflows/ci.yml`) on every push/PR: eslint, 8 vitest tests against a real pgvector service, production build, 16 cargo tests, WASM build + artifact upload |
 | **Contract Unit Tests** | ✅ Pass | **16/16** passing (`cargo test --workspace`) + **8/8** similarity pipeline tests (`vitest`) |
@@ -454,7 +454,7 @@ Community feedback from pilot hackathons and student chapters is continuously ga
 - [x] **Automated Smart Contract Tests**: 16/16 passing Rust tests covering authorization, self-registration, duplicate rejection, cross-event allowance, indexes.
 - [x] **Full-Stack SaaS Web App**: single Next.js 16 deployable — cinematic landing, team portal, organizer dashboard, public 3D verification.
 - [x] **Stellar Wallet & Freighter Integration**: Freighter connect + sponsored zero-XLM team accounts + wallet-keyed profiles.
-- [ ] **Video Demonstration**: `[pending]`.
+- [x] **Video Demonstration**: [youtu.be/ZX6fF-mZ9bM](https://youtu.be/ZX6fF-mZ9bM).
 - [x] **Visual UI Showcase**: captured in [`docs/screenshots/`](docs/screenshots/) — see below.
 
 ---
@@ -495,7 +495,7 @@ Community feedback from pilot hackathons and student chapters is continuously ga
 
 ## 🎥 Demo Video
 
-`[Record a 1–2 minute walkthrough: submit → advisory flag → organizer approve → on-chain timestamp → verify page → duplicate rejection]`
+[Watch on YouTube](https://youtu.be/ZX6fF-mZ9bM) — walkthrough of the full flow: submit → advisory flag → organizer approve → on-chain timestamp → verify page → duplicate rejection.
 
 ---
 
